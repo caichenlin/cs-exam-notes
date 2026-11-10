@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>資料結構｜資工所考試準備</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="back-link" href="../index.html">← 回首頁</a>
+      <h1>資料結構</h1>
+    </header>
+
+    <main>
+      <!-- 以下四個區塊的名稱、id、順序固定，不可更動（見 CLAUDE.md 第 6 節） -->
+
+      <section id="scope">
+        <h2>考試範圍</h2>
+        <ul>
+          <li>演算法分析與時間複雜度（Big-O、Θ、Ω）</li>
+          <li>Array 與 Linked List</li>
+          <li>Stack 與 Queue（含運算式轉換、遞迴）</li>
+          <li>Tree：Binary Tree、走訪、Binary Search Tree</li>
+          <li>Heap 與 Priority Queue</li>
+          <li>平衡樹：AVL Tree、B-Tree 等</li>
+          <li>Graph：表示法、BFS／DFS、最小生成樹、最短路徑</li>
+          <li>Sorting 與 Searching</li>
+          <li>Hashing：雜湊函數、碰撞處理</li>
+        </ul>
+      </section>
+
+      <section id="key-points">
+        <h2>重點整理</h2>
+
+        <h3>時間複雜度 Big-O</h3>
+        <p>Big-O 描述「資料量 n 變大時，執行時間最多會長多快」，只看最高次項、忽略常數。例如迴圈跑 3n + 5 次，就寫成 O(n)；兩層各跑 n 次的巢狀迴圈是 O(n²)。比較演算法時，重點是成長速度，而不是在小資料上誰比較快。</p>
+
+        <h3>Array 與 Linked List</h3>
+        <p>Array 的元素在記憶體中連續存放，所以用索引讀取是 O(1)，但在中間插入或刪除要搬移後面的元素，是 O(n)。Linked List 每個節點用指標串起來，已知位置時插入刪除只要改指標，是 O(1)，但要找到第 k 個元素必須從頭走，是 O(n)。</p>
+
+        <h3>Stack 與 Queue</h3>
+        <p>Stack 是後進先出（LIFO），像疊盤子，只能從最上面放和拿；常用於函式呼叫、括號配對、中序轉後序。Queue 是先進先出（FIFO），像排隊；常用於 BFS 與工作排程。兩者的 push／pop（enqueue／dequeue）都是 O(1)。</p>
+
+        <h3>Binary Tree 走訪</h3>
+        <p>三種深度優先走訪的差別只在「什麼時候拜訪根」：前序（根、左、右）、中序（左、根、右）、後序（左、右、根）。對 Binary Search Tree 做中序走訪，會得到由小到大排好的序列。</p>
+        <pre><code>void inorder(Node *t) {
+    if (t == NULL) return;
+    inorder(t-&gt;left);
+    visit(t);
+    inorder(t-&gt;right);
+}</code></pre>
+
+        <h3>Heap 與 Priority Queue</h3>
+        <p>Heap 是一棵完整二元樹，Min-Heap 規定「每個父節點都不大於子節點」，所以最小值永遠在根。通常用陣列存：索引 i（從 0 開始）的左右子節點在 2i+1、2i+2。插入與刪除最小值都是 O(log n)，因此很適合拿來實作 Priority Queue。</p>
+
+        <h3>Graph 的 BFS 與 DFS</h3>
+        <p>Graph 常用 adjacency matrix（O(V²) 空間）或 adjacency list（O(V+E) 空間）表示。BFS 用 Queue，一層一層往外擴展，在無權重圖中可找到最短路徑；DFS 用 Stack（或遞迴），一路走到底再回頭。用 adjacency list 時，兩者的時間複雜度都是 O(V+E)。</p>
+      </section>
+
+      <section id="past-questions">
+        <h2>考古題解析</h2>
+
+        <dl class="question">
+          <dt>題型概述</dt>
+          <dd>給定一棵二元樹的前序走訪 <code>A B D E C F</code> 與中序走訪 <code>D B E A F C</code>，求後序走訪。</dd>
+          <dt>解析</dt>
+          <dd>前序的第一個一定是根，所以根是 A。在中序裡 A 的左邊（D B E）是左子樹、右邊（F C）是右子樹。左子樹在前序中是 B D E，根為 B，再對照中序可知 D 在 B 左、E 在 B 右。右子樹在前序中是 C F，根為 C，中序 F C 表示 F 是 C 的左子節點。最後依「左、右、根」寫出後序：<code>D E B F C A</code>。</dd>
+          <dt>出處</dt>
+          <dd>自編示範題</dd>
+        </dl>
+
+        <dl class="question">
+          <dt>題型概述</dt>
+          <dd>依序將 <code>5, 3, 8, 1, 4, 2</code> 插入一個空的 Min-Heap，寫出陣列內容；再執行一次刪除最小值，寫出結果。</dd>
+          <dt>解析</dt>
+          <dd>每次插入都放到陣列最後，再和父節點比較，比較小就往上交換（sift-up）。依序插入後得到 <code>[1, 3, 2, 5, 4, 8]</code>。刪除最小值時，取出根 1，把最後一個元素 8 移到根，再和較小的子節點往下交換（sift-down）：8 與 2 交換後已無子節點，結果為 <code>[2, 3, 8, 5, 4]</code>。</dd>
+          <dt>出處</dt>
+          <dd>自編示範題</dd>
+        </dl>
+      </section>
+
+      <section id="common-mistakes">
+        <h2>易錯題</h2>
+        <ul>
+          <li><strong>錯誤觀念：</strong>Binary Search Tree 的搜尋一定是 O(log n)。<br><strong>正確說法：</strong>O(log n) 只在樹大致平衡時成立。若依序插入已排序的資料，樹會退化成一條鏈，搜尋變成 O(n)；要保證 O(log n) 需使用 AVL Tree 等平衡樹。</li>
+          <li><strong>錯誤觀念：</strong>Heap 的陣列是排好序的。<br><strong>正確說法：</strong>Heap 只保證「父節點與子節點」之間的大小關係，兄弟之間、不同層之間沒有順序，例如 <code>[1, 3, 2, 5, 4, 8]</code> 是合法的 Min-Heap，但並未排序。</li>
+          <li><strong>錯誤觀念：</strong>把 n 個元素建成 Heap 一定要 O(n log n)。<br><strong>正確說法：</strong>逐一插入是 O(n log n)，但用由下而上的 heapify（從最後一個非葉節點往前做 sift-down）建堆，總時間是 O(n)。</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>最後更新：2026-11-10</p>
+    </footer>
+  </div>
+</body>
+</html>

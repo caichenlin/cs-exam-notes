@@ -8,19 +8,32 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>資工所考試準備</h1>
-      <p>這是準備資工所考試的筆記網站，每個科目一頁。每頁整理考試範圍、重點觀念、考古題解析與易錯題，方便考前快速複習。</p>
+    <header class="hero">
+      <div class="hero-text">
+        <h1>一頁一科，<mark class="hl">慢慢</mark>把資工所讀完。</h1>
+        <p class="hero-subtitle">考試範圍、重點、考古題與易錯題，整理在同一頁。</p>
+      </div>
+      <div class="hero-sticker" aria-hidden="true">📒</div>
     </header>
 
     <main>
+      <p>這是準備資工所考試的筆記網站，每個科目一頁。每頁整理考試範圍、重點觀念、考古題解析與易錯題，方便考前快速複習。</p>
+
       <h2>科目列表</h2>
       <ul class="subject-list">
         <li class="subject-card">
+          <div class="tag-list">
+            <span class="tag">核心科目</span>
+            <span class="tag">6 個重點</span>
+            <span class="tag">2 題解析</span>
+            <span class="tag">3 個易錯觀念</span>
+          </div>
           <h3>資料結構</h3>
           <p>Array、Linked List、Stack、Queue、Tree、Heap、Graph 等基本結構與操作複雜度。</p>
-          <a href="subjects/data-structures.html">前往資料結構 →</a>
+          <a href="subjects/data-structures.html">開始閱讀 →</a>
         </li>
+        <!-- 佔位卡固定放最後，新科目卡片一律插在它前面 -->
+        <li class="placeholder-card">更多科目，陸續加入中…✏️</li>
       </ul>
     </main>
 
